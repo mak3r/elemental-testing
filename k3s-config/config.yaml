@@ -1,0 +1,5 @@
+write-kubeconfig: "/home/{USER}/config" 
+write-kubeconfig-mode: "0644"
+tls-san:
+  - "{HOSTNAME}"
+kubelet-arg: "config=/etc/rancher/k3s/kubelet.conf"
