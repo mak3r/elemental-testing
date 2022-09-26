@@ -44,14 +44,14 @@ The prior commands will create 2 infrastructure nodes for the rancher cluster an
 
     These are the underlying variables some of which can be modified by passing through the makefile.
 
-    * aws_access_key_id = ""
-    * aws_secret_access_key = ""
-    * prefix = "mak3r"
-    * ssh_key_file_name = "~/.ssh/id_rsa"
-    * aws_region = "us-east-1"
-    * db_instance_type = "db.m5.large"
-    * db_password = "r4nch3r!"
-    * downstream_count = 3
+    * aws_access_key_id
+    * aws_secret_access_key
+    * prefix
+    * ssh_key_file_name
+    * aws_region
+    * db_instance_type
+    * db_password
+    * downstream_count
 
 ### Install elemental operator
 1. Insure your kubeconfig points to the newly created rancher cluster 
