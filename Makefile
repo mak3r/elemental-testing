@@ -75,3 +75,8 @@ inventory:
 	kubectl apply -f e7l/registration.yaml
 	kubectl apply -f e7l/selector.yaml
 
+iso:
+	[[ ! -d build ]] && mkdir build && echo "build/ exists continuing .."
+	curl -k `kubectl get machineregistration -n fleet-default my-nodes -o jsonpath="{.status.registrationURL}"` -O build/initial-registration.yaml
+	cd build && curl -sfLO https://raw.githubusercontent.com/rancher/elemental/main/elemental-iso-build && chmod +x elemental-iso-build
+	cd build && ./elemental_iso_build initial_registration.yaml
