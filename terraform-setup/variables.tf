@@ -51,3 +51,9 @@ variable "downstream_count" {
 	description = "The number of downstream instances to create"
 	default = 0
 }
+
+variable "rancher_node_count" {
+	type = number
+	description = "The number of nodes to use for the rancher cluster"
+	default = 1
+}

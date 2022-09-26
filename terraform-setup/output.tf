@@ -5,8 +5,7 @@ output "url" {
 }
 output "rancher_cluster_ips" {
   value = [
-    aws_instance.rancher.0.public_ip,
-    aws_instance.rancher.1.public_ip,
+	for instance in aws_instance.rancher : instance.public_ip
   ]
 }
 
