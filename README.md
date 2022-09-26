@@ -62,6 +62,13 @@ The prior commands will create 2 infrastructure nodes for the rancher cluster an
 1. `make elemental_operator`
 
 
+### Build the ISO for the Registered Cluster
+NOTE: this has only been tested for x86_64 architecture
+
+1. `make inventory`
+1. `make iso`
+
+
 ### Build Downstream Clusters (optional)
 If you do need downstream clusters in AWS that are not using elemental, set DOWNSTREAM_COUNT to a number > 0 and use the following command with an API token generated from Rancher to install k3s on those downstream clusters.
 1. `make DOWNSTREAM_COUNT=3 infrastructure`
