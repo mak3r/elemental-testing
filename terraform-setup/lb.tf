@@ -25,8 +25,7 @@ resource "aws_elb" "rancher-server-lb" {
   }
 
   instances                   = [
-    aws_instance.rancher[0].id,
-    aws_instance.rancher[1].id
+	for instance in aws_instance.rancher : instance.id
   ]
   cross_zone_load_balancing   = true
   idle_timeout                = 400

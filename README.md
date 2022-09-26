@@ -33,6 +33,26 @@ The prior commands will create 2 infrastructure nodes for the rancher cluster an
 
 1. Login to Rancher at the URL output by the last make command
 
+=== "Rancher makefile options"
+
+    * RANCHER_NODE_COUNT: number of nodes in the rancher cluster (default 1)
+    * DOWNSTREAM_COUNT: number of single node downstream clusters to create (default 0)
+    * RANCHER_SUBDOMAIN: the subdomain for the rancher instance
+    * SQL_PASSWORD: the password for the sql backend
+
+=== "Terraform variables"
+
+    These are the underlying variables some of which can be modified by passing through the makefile.
+
+    * aws_access_key_id = "AKIAXDJAMJALCJEHG7GF"
+    * aws_secret_access_key = "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"
+    * prefix = "mak3r"
+    * ssh_key_file_name = "~/.ssh/id_rsa"
+    * aws_region = "us-east-1"
+    * db_instance_type = "db.m5.large"
+    * db_password = "r4nch3r!"
+    * downstream_count = 3
+
 ### Install elemental operator
 1. Insure your kubeconfig points to the newly created rancher cluster 
     * There are several make targets to assist with that

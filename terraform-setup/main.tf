@@ -24,7 +24,7 @@ resource "aws_security_group" "sg_allowall" {
 }
 
 resource "aws_instance" "rancher" {
-  count         = 2
+  count         = var.rancher_node_count
   ami           = data.aws_ami.suse.id
   instance_type = "t3a.medium"
 
