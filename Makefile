@@ -20,19 +20,21 @@ destroy:
 sleep:
 	sleep 60
 
-rancher-quick: infrastructure k3s-install rancher
+rancher: infrastructure k3s-install rancher-app
 
+.PHONY: infrastructure
 infrastructure:
 	echo "Creating infrastructure"
 	cd terraform-setup && terraform init && terraform apply -auto-approve -var rancher_url=$(RANCHER_SUBDOMAIN) -var db_password=$(SQL_PASSWORD) -var downstream_count=$(DOWNSTREAM_COUNT) -var rancher_node_count=$(RANCHER_NODE_COUNT)
 
+.PHONY: k3s-install
 k3s-install: 
 	echo "Creating k3s cluster"
-	source bin/get-env.sh && [[ ! -n "${IP1}" ]] && echo "Cluster will be single node" || "Cluster will be multi-node"
-	source bin/get-env.sh && ssh -o StrictHostKeyChecking=no ec2-user@${IP0} "curl -sfL https://get.k3s.io | INSTALL_K3S_CHANNEL=$(K3S_CHANNEL) INSTALL_K3S_EXEC='server --tls-san ${IP0} ' K3S_DATASTORE_ENDPOINT='${RDS_PRE}$(SQL_PASSWORD)${RDS_POST}' K3S_TOKEN=$(K3S_TOKEN) K3S_KUBECONFIG_MODE=644 sh -"
-	source bin/get-env.sh && [[ -z "${IP1}" ]] && echo "no additional servers to join cluster" || ssh -o StrictHostKeyChecking=no ec2-user@${IP1} "curl -sfL https://get.k3s.io | INSTALL_K3S_CHANNEL=$(K3S_CHANNEL) INSTALL_K3S_EXEC='server --tls-san ${IP0} --tls-san ${IP1}' K3S_DATASTORE_ENDPOINT='${RDS_PRE}$(SQL_PASSWORD)${RDS_POST}' K3S_TOKEN=$(K3S_TOKEN) K3S_KUBECONFIG_MODE=644 sh -"
-	source bin/get-env.sh && scp -o StrictHostKeyChecking=no ec2-user@${IP0}:/etc/rancher/k3s/k3s.yaml kubeconfig
-	source bin/get-env.sh && sed -i '' "s/127.0.0.1/${IP0}/g" kubeconfig
+	source bin/get-env.sh && [[ ! -n "$${IP1}" ]] && echo "Cluster will be single node" || "Cluster will be multi-node"
+	source bin/get-env.sh && ssh -o StrictHostKeyChecking=no ec2-user@$${IP0} "curl -sfL https://get.k3s.io | INSTALL_K3S_CHANNEL=$(K3S_CHANNEL) INSTALL_K3S_EXEC='server --tls-san $${IP0} ' K3S_DATASTORE_ENDPOINT='$${RDS_PRE}$(SQL_PASSWORD)$${RDS_POST}' K3S_TOKEN=$(K3S_TOKEN) K3S_KUBECONFIG_MODE=644 sh -"
+	source bin/get-env.sh && [[ -z "$${IP1}" ]] && echo "no additional servers to join cluster" || ssh -o StrictHostKeyChecking=no ec2-user@$${IP1} "curl -sfL https://get.k3s.io | INSTALL_K3S_CHANNEL=$(K3S_CHANNEL) INSTALL_K3S_EXEC='server --tls-san $${IP0} --tls-san $${IP1}' K3S_DATASTORE_ENDPOINT='$${RDS_PRE}$(SQL_PASSWORD)$${RDS_POST}' K3S_TOKEN=$(K3S_TOKEN) K3S_KUBECONFIG_MODE=644 sh -"
+	source bin/get-env.sh && scp -o StrictHostKeyChecking=no ec2-user@$${IP0}:/etc/rancher/k3s/k3s.yaml kubeconfig
+	source bin/get-env.sh && sed -i '' "s/127.0.0.1/$${IP0}/g" kubeconfig
 
 backup_kubeconfig:
 	cp ~/.kube/config ~/.kube/$(BACKUP_NAME)
@@ -43,7 +45,8 @@ install_kubeconfig:
 restore_kubeconfig:
 	cp ~/.kube/$(BACKUP_NAME) ~/.kube/config
 
-rancher: 
+.PHONY: rancher-app
+rancher-app: 
 	echo "Installing cert-manager and Rancher"
 	kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.9.1/cert-manager.crds.yaml
 	helm repo update
