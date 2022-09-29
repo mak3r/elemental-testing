@@ -83,3 +83,6 @@ iso:
 	curl -k $(shell kubectl get machineregistration -n fleet-default my-nodes -o jsonpath="{.status.registrationURL}") -o build/initial-registration.yaml
 	cd build && curl -sLO https://raw.githubusercontent.com/rancher/elemental/main/.github/elemental-iso-build && chmod +x elemental-iso-build
 	cd build && ./elemental-iso-build initial-registration.yaml
+
+clean:
+	rm -rf build/*iso*
