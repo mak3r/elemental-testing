@@ -66,6 +66,9 @@ The prior commands will create 2 infrastructure nodes for the rancher cluster an
 NOTE: this has only been tested for x86_64 architecture
 
 1. `make inventory`
+1. If this is a different device than where the terraform was run. 
+    1. scp <kubeconfig_on_tf_box> <iso_build_box>
+    1. `make install_kubeconfig` 
 1. `make iso`
 
 
