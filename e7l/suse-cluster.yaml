@@ -1,0 +1,23 @@
+kind: Cluster
+apiVersion: provisioning.cattle.io/v1
+metadata:
+  name: suse-cluster
+  namespace: fleet-default
+  labels:
+    environment: demo
+    edge-arch: single-node
+    corp: suse
+spec:
+  rkeConfig:
+    machinePools:
+      - controlPlaneRole: true
+        etcdRole: true
+        machineConfigRef:
+          apiVersion: elemental.cattle.io/v1beta1
+          kind: MachineInventorySelectorTemplate
+          name: suse-machine-selector
+        name: pool1
+        quantity: 1
+        unhealthyNodeTimeout: 0s
+        workerRole: true
+  kubernetesVersion: v1.23.7+k3s1

@@ -1,8 +1,12 @@
 kind: Cluster
 apiVersion: provisioning.cattle.io/v1
 metadata:
-  name: my-cluster
+  name: intel-cluster
   namespace: fleet-default
+  labels:
+    environment: demo
+    edge-arch: single-node
+    corp: intel
 spec:
   rkeConfig:
     machinePools:
@@ -11,7 +15,7 @@ spec:
         machineConfigRef:
           apiVersion: elemental.cattle.io/v1beta1
           kind: MachineInventorySelectorTemplate
-          name: us-machine-selector
+          name: intel-machine-selector
         name: pool1
         quantity: 1
         unhealthyNodeTimeout: 0s
