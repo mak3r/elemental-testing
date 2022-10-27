@@ -17,7 +17,7 @@ spec:
           kind: MachineInventorySelectorTemplate
           name: suse-machine-selector
         name: pool1
-        quantity: 1
+        quantity: 3
         unhealthyNodeTimeout: 0s
         workerRole: true
   kubernetesVersion: v1.23.7+k3s1

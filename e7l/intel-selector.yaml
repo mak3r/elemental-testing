@@ -10,4 +10,4 @@ spec:
         matchExpressions:
           - key: location
             operator: In
-            values: [ 'kubecon' ]
+            values: [ 'intel-01' ]
