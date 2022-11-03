@@ -1,80 +1,34 @@
 # Elemental Testing
-Build a rancher instance for testing and working with elemental instances.
+Create an machine image and related rancher components for an elemental toolkit based cluster.
 
 ## Dependencies
 
-* terraform
-* helm
 * jq
 * kubectl
-* aws
 * dns address for Rancher
 
 ## Quick Start
 ### Prep
-* `cp terraform-setup/terraform.tfvars.template terraform-setup/terraform.tfvars`
-    * Adjust the tfvars variables as desired
-* Set your aws account id and key using the terraform variables
-    * `aws_access_key_id`
-    * `aws_secret_access_key`
-* See `variables.tf` for other infrastructure configuration 
-* Make sure you have a registered domain
-    * Use terraform variable `domain` to set it
-    * Use terraform variable `rancher_url` to set the subdomain
-    * fqdn is <rancher_url>.<domain>
 
-### Build the Rancher infrastructure
-```
-make infrastructure
-make k3s-install
-make rancher
-```
-The prior commands will create 2 infrastructure nodes for the rancher cluster and 0 nodes (using `DOWNSTREAM_COUNT` variable) for populating with virtual clusters. Currently we don't need the virtual clusters as we will be creating elemental clusters instead.
-
-1. Login to Rancher at the URL output by the last make command
-
-=== "Rancher makefile options"
-
-    * RANCHER_NODE_COUNT: number of nodes in the rancher cluster (default 1)
-    * DOWNSTREAM_COUNT: number of single node downstream clusters to create (default 0)
-    * RANCHER_SUBDOMAIN: the subdomain for the rancher instance
-    * SQL_PASSWORD: the password for the sql backend
-
-=== "Terraform variables"
-
-    These are the underlying variables some of which can be modified by passing through the makefile.
-
-    * aws_access_key_id
-    * aws_secret_access_key
-    * prefix
-    * ssh_key_file_name
-    * aws_region
-    * db_instance_type
-    * db_password
-    * downstream_count
+* Get administrative access to a Rancher Management cluster.
+* Update [registration.yaml](e7l/registration.yaml) to suit your needs
 
 ### Install elemental operator
-1. Insure your kubeconfig points to the newly created rancher cluster 
-    * There are several make targets to assist with that
-    * `make backup_kubeconfig` backup your existing kubeconfig that lives at ~/.kube/config to ~/.kube/kubeconfig.elemental_test
-    * `make install_kubeconfig` install the rancher clusters kubeconfig into ~/.kube/config
-    * `make restore_kubeconfig` restore the kubeconfig that was backed up at ~/.kube/kubeconfig.elemental_test to ~/.kube/config
+1. Insure your kubeconfig points to the correct Rancher cluster 
 1. `make elemental_operator`
 
 
 ### Build the ISO for the Registered Cluster
 NOTE: this has only been tested for x86_64 architecture
-
-1. `make inventory`
-1. If this is a different device than where the terraform was run. 
-    1. scp <kubeconfig_on_tf_box> <iso_build_box>
-    1. `make install_kubeconfig` 
+ 
 1. `make iso`
+1. [Burn the iso(s) to a usb stick](bin/iso_to_usb_stick.sh)
+1. Boot the device(s) from the usb stick "install elemental"
+1. Connect cluster to Rancher.
+    * If the registration is set to `poweroff: true` then it will try to connect to the Rancher Management Server the next time it is rebooted.
+    * If the registration is set to `reboot: true` then it will automatically reboot and attempt to connect.
 
-
-### Build Downstream Clusters (optional)
-If you do need downstream clusters in AWS that are not using elemental, set DOWNSTREAM_COUNT to a number > 0 and use the following command with an API token generated from Rancher to install k3s on those downstream clusters.
-1. `make DOWNSTREAM_COUNT=3 infrastructure`
-1. `make API_TOKEN="ab39g:4ioooooEXAMPLEoooTOKENoooookj98z" downstream`
-1. Register each cluster in Rancher as needed.
+### Create Clusters in Rancher
+This can be 
+1. `make register_cluster`
 

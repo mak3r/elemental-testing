@@ -1,8 +1,0 @@
-vcluster:
-  resources:
-    limits:
-      memory: 290Mi
-      cpu: 55m
-    requests:
-      cpu: 10m
-      memory: 128Mi
