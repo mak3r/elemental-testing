@@ -6,7 +6,7 @@ elemental_operator:
 	sleep 20
 	kubectl apply -f e7l/registration.yaml
 
-register_cluster:
+cluster:
 	kubectl apply -f e7l/suse-cluster.yaml
 	kubectl apply -f e7l/suse-selector.yaml
 
