@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-
+REGISTRATION_NAME := sales-summit-2023-demo
 
 elemental_operator:
 	helm upgrade --create-namespace -n cattle-elemental-system --install elemental-operator oci://registry.opensuse.org/isv/rancher/elemental/charts/elemental/elemental-operator
@@ -12,7 +12,7 @@ register_cluster:
 
 iso: clean
 	[[ ! -d build ]] && mkdir build || echo "build/ exists, continuing .."
-	curl -k $(shell kubectl get machineregistration -n fleet-default kubecon-demo -o jsonpath="{.status.registrationURL}") -o build/initial-registration.yaml
+	curl -k $(shell kubectl get machineregistration -n fleet-default ${{REGISTRATION_NAME}} -o jsonpath="{.status.registrationURL}") -o build/initial-registration.yaml
 	cd build && curl -sLO https://raw.githubusercontent.com/rancher/elemental/main/.github/elemental-iso-build && chmod +x elemental-iso-build
 	cd build && ./elemental-iso-build initial-registration.yaml
 
