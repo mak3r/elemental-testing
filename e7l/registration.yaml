@@ -1,7 +1,7 @@
 apiVersion: elemental.cattle.io/v1beta1
 kind: MachineRegistration
 metadata:
-  name: kubecon-demo
+  name: sales-summit-2023-demo
   namespace: fleet-default
 spec:
   config:
@@ -32,7 +32,7 @@ spec:
         debug: true
   machineName: "mak3r-${System Information/UUID}"
   machineInventoryLabels:
-    location: "kubecon"
+    location: "malta"
     manufacturer: "${System Information/Manufacturer}"
     productName: "${System Information/Product Name}"
     serialNumber: "${System Information/Serial Number}"
