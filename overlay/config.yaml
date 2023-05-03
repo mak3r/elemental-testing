@@ -1,0 +1,22 @@
+#cloud-config
+# write_files:
+#   - path: /etc/sysconfig/proxy
+#     owner: root:root
+#     permissions: '0644'
+#     content: |
+#       PROXY_ENABLED="yes"
+#       HTTP_PROXY="http://192.168.0.1:3128"
+#       HTTPS_PROXY="http://192.168.0.1:3128"
+#       FTP_PROXY="http://192.168.0.1:3128"
+#       NO_PROXY="localhost, 127.0.0.1"
+write_files:
+  - path: /var/lib/custom.conf
+    owner: root:root
+    permissions: '0644'
+    content: |
+      # Some custom configuration
+      {
+        "name": "test-location",
+        "info": "information goes here",
+        "details": { "data": "more info here"}
+      }

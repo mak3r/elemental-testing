@@ -1,0 +1,18 @@
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: cows-demo
+  namespace: fleet-default
+spec:
+  branch: main
+  insecureSkipTLSVerify: false
+  paths:
+  - /live
+  repo: https://github.com/mak3r/fleet-demo-src
+  targets:
+  - clusterSelector:
+      matchExpressions:
+      - key: provider.cattle.io
+        operator: NotIn
+        values:
+        - harvester

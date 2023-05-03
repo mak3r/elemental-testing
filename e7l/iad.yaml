@@ -1,12 +1,28 @@
+apiVersion: elemental.cattle.io/v1beta1
+kind: MachineInventorySelectorTemplate
+metadata:
+  name: iad-machine-selector
+  namespace: fleet-default
+spec:
+  template:
+    spec:
+      selector:
+        matchExpressions:
+          - key: location
+            operator: In
+            values: [ 'us' ]
+---
 kind: Cluster
 apiVersion: provisioning.cattle.io/v1
 metadata:
-  name: intel-01
+  name: iad
   namespace: fleet-default
   labels:
-    environment: demo
+    environment: virtual
     edge-arch: single-node
-    corp: intel
+    region: dc
+    airport: iad
+    geo: dc
 spec:
   rkeConfig:
     machinePools:
@@ -15,7 +31,7 @@ spec:
         machineConfigRef:
           apiVersion: elemental.cattle.io/v1beta1
           kind: MachineInventorySelectorTemplate
-          name: intel-01
+          name: iad-machine-selector
         name: pool1
         quantity: 1
         unhealthyNodeTimeout: 0s

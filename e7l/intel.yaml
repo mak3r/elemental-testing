@@ -1,0 +1,37 @@
+apiVersion: elemental.cattle.io/v1beta1
+kind: MachineInventorySelectorTemplate
+metadata:
+  name: intel-machine-selector
+  namespace: fleet-default
+spec:
+  template:
+    spec:
+      selector:
+        matchExpressions:
+          - key: location
+            operator: In
+            values: [ 'intel-01' ]
+---
+kind: Cluster
+apiVersion: provisioning.cattle.io/v1
+metadata:
+  name: intel-01
+  namespace: fleet-default
+  labels:
+    environment: demo
+    edge-arch: single-node
+    corp: intel
+spec:
+  rkeConfig:
+    machinePools:
+      - controlPlaneRole: true
+        etcdRole: true
+        machineConfigRef:
+          apiVersion: elemental.cattle.io/v1beta1
+          kind: MachineInventorySelectorTemplate
+          name: intel-01
+        name: pool1
+        quantity: 1
+        unhealthyNodeTimeout: 0s
+        workerRole: true
+  kubernetesVersion: v1.23.7+k3s1

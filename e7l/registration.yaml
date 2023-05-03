@@ -1,7 +1,7 @@
 apiVersion: elemental.cattle.io/v1beta1
 kind: MachineRegistration
 metadata:
-  name: sales-summit-2023-demo
+  name: vtpm-demo
   namespace: fleet-default
 spec:
   config:
@@ -27,13 +27,18 @@ spec:
         permissions: "0644"
     elemental:
       install:
-        poweroff: true
-        device: /dev/nvme0n1
+        reboot: true
+        device: /dev/sda
         debug: true
-  machineName: "mak3r-${System Information/UUID}"
+        eject-cd: true
+      registration:
+        emulate-tpm: true
+        emulated-tpm-seed: -1
+        no-smbios: true
+  # machineName: "${System Information/UUID}"
   machineInventoryLabels:
-    location: "malta"
-    manufacturer: "${System Information/Manufacturer}"
-    productName: "${System Information/Product Name}"
-    serialNumber: "${System Information/Serial Number}"
-    machineUUID: "${System Information/UUID}"
+    location: "us"
+    # manufacturer: "${System Information/Manufacturer}"
+    # productName: "${System Information/Product Name}"
+    # serialNumber: "${System Information/Serial Number}"
+    # machineUUID: "${System Information/UUID}"

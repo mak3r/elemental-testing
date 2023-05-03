@@ -1,0 +1,50 @@
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: iad-unique
+  namespace: fleet-default
+spec:
+  branch: main
+  insecureSkipTLSVerify: false
+  paths:
+  - /cluster001
+  repo: https://github.com/mak3r/fleet-unique
+  targets:
+  - clusterSelector: 
+      matchLabels:
+        geo: dc
+    name: iad
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: jfk-unique
+  namespace: fleet-default
+spec:
+  branch: main
+  insecureSkipTLSVerify: false
+  paths:
+  - /cluster002
+  repo: https://github.com/mak3r/fleet-unique
+  targets:
+  - clusterSelector: 
+      matchLabels:
+        geo: ny
+    name: jfk
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: dfw-unique
+  namespace: fleet-default
+spec:
+  branch: main
+  insecureSkipTLSVerify: false
+  paths:
+  - /cluster002
+  repo: https://github.com/mak3r/fleet-unique
+  targets:
+  - clusterSelector: 
+      matchLabels:
+        geo: tx
+    name: dfw
