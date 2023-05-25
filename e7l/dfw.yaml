@@ -1,0 +1,49 @@
+apiVersion: elemental.cattle.io/v1beta1
+kind: MachineInventorySelectorTemplate
+metadata:
+  name: dfw-machine-selector
+  namespace: fleet-default
+spec:
+  template:
+    spec:
+      selector:
+        matchExpressions:
+          - key: location
+            operator: In
+            values: [ 'us' ]
+---
+kind: Cluster
+apiVersion: provisioning.cattle.io/v1
+metadata:
+  name: dfw
+  namespace: fleet-default
+  labels:
+    environment: virtual
+    edge-arch: multi-node
+    region: dallas
+    airport: dfw
+    geo: tx
+spec:
+  rkeConfig:
+    machinePools:
+      - controlPlaneRole: true
+        etcdRole: true
+        machineConfigRef:
+          apiVersion: elemental.cattle.io/v1beta1
+          kind: MachineInventorySelectorTemplate
+          name: dfw-machine-selector
+        name: control-plane
+        quantity: 1
+        unhealthyNodeTimeout: 0s
+        workerRole: true
+      - controlPlaneRole: false
+        etcdRole: false
+        machineConfigRef:
+          apiVersion: elemental.cattle.io/v1beta1
+          kind: MachineInventorySelectorTemplate
+          name: dfw-machine-selector
+        name: worker
+        quantity: 2
+        unhealthyNodeTimeout: 0s
+        workerRole: true
+  kubernetesVersion: v1.23.7+k3s1

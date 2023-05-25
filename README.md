@@ -17,9 +17,12 @@ Create an machine image and related rancher components for an elemental toolkit 
 1. Insure your kubeconfig points to the correct Rancher cluster 
 1. `make elemental_operator`
 
+### Apply the registration(s)
+1. `make registration`
 
 ### Build the ISO for the Registered Cluster
 NOTE: this has only been tested for x86_64 architecture
+ALSO: the default behavior of the `make iso` target is to delete prior isos so preserve them as needed
  
 1. `make iso`
 1. [Burn the iso(s) to a usb stick](bin/iso_to_usb_stick.sh)
