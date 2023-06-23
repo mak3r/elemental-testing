@@ -34,11 +34,10 @@ spec:
       registration:
         emulate-tpm: true
         emulated-tpm-seed: -1
-        no-smbios: true
-  # machineName: "${System Information/UUID}"
+  machineName: "${System Information/UUID}"
   machineInventoryLabels:
     location: "us"
-    # manufacturer: "${System Information/Manufacturer}"
-    # productName: "${System Information/Product Name}"
-    # serialNumber: "${System Information/Serial Number}"
-    # machineUUID: "${System Information/UUID}"
+    manufacturer: "${System Information/Manufacturer}"
+    productName: "${System Information/Product Name}"
+    serialNumber: "${System Information/Serial Number}"
+    machineUUID: "${System Information/UUID}"

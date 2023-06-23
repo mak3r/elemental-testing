@@ -7,3 +7,6 @@ kubeconfig
 scratch.md
 scratch/
 build/
+*.connection
+*.tgz
+*.ova

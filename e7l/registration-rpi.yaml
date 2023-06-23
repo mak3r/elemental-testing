@@ -1,0 +1,45 @@
+apiVersion: elemental.cattle.io/v1beta1
+kind: MachineRegistration
+metadata:
+  name: rpi-demo
+  namespace: fleet-default
+spec:
+  config:
+    cloud-config:
+      users:
+        - name: mak3r
+          sudo: ALL=(ALL) NOPASSWD:ALL
+          groups: mak3r, users, admin
+        - name: root
+          passwd: root
+      ssh_authorized_keys:
+        - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDHVZtKeG7C1CmMYh07Rgm6JkbIZ90DpjuKip1Aexhm5qz0O/E6w6tB0FTd2rCWO+FtOYpFMT2ao9dqeMvBTkTRGGQZ1nG+QaWYFGExS5lGUm+n9GXJU34LK6fcVx7xgZ3rw7RKWYXPmS/hIujSKRL0Qj9RMuVHIVMzDUzUL9zYOEHyLtY5OkHgzCp8wcVyx7CdBY/G3gru42MQmLoN3yJV1mti7YS9IjY99i55M5FeUe4/NcukHoYkMuyHtHugHlXeficAhpUrsouKRnMaXDFCK4sGmZucF8zpyXpG8qcGE+S6b5e/NderR+HlWTbpURiFJRthwCr2pAR90pvanuUN markabrams@marks-mbp.lan
+      write_files:
+      - content: |
+          # /etc/udev/rules.d/11-ftdi.rules
+
+          # FT232H
+          SUBSYSTEM=="usb", ATTR{idVendor}=="0403", ATTR{idProduct}=="6014", GROUP="plugdev", MODE="0664"
+        path: /etc/udev/rules.d/11-ftdi.rules
+        permissions: "0644"
+      - encoding: b64
+        content: W2Nvbm5lY3Rpb25dCmlkPWdsaW5ldAp0eXBlPXdpZmkKaW50ZXJmYWNlLW5hbWU9d2xhbjAKcGVybWlzc2lvbnM9CnRpbWVzdGFtcD0xNjcxNTQ5NjQxCgpbd2lmaV0KbWFjLWFkZHJlc3MtYmxhY2tsaXN0PQptb2RlPWluZnJhc3RydWN0dXJlCnNzaWQ9R0wtQVI3NTBTLWFmOC01RwoKW3dpZmktc2VjdXJpdHldCmtleS1tZ210PXdwYS1wc2sKcHNrPWJvb3RsZWctYmFsc2EtZGljdGF0ZQoKW2lwdjRdCmRucy1zZWFyY2g9Cm1ldGhvZD1hdXRvCgpbaXB2Nl0KYWRkci1nZW4tbW9kZT1zdGFibGUtcHJpdmFjeQpkbnMtc2VhcmNoPQptZXRob2Q9YXV0bw==
+        path: /etc/NetworkManager/system-connections/glinet.connection
+      - encoding: b64
+        content: W2Nvbm5lY3Rpb25dCmlkPW1vYmlsZVdBUAp0eXBlPXdpZmkKaW50ZXJmYWNlLW5hbWU9d2xhbjAKcGVybWlzc2lvbnM9CnRpbWVzdGFtcD0xNjcxNTQ5NjQxCgpbd2lmaV0KbWFjLWFkZHJlc3MtYmxhY2tsaXN0PQptb2RlPWluZnJhc3RydWN0dXJlCnNzaWQ9TWFrM3JzTW9iaWxlCgpbd2lmaS1zZWN1cml0eV0Ka2V5LW1nbXQ9d3BhLXBzawpwc2s9T0pkQS01Mno2LVZvcnAtZEJ5VgoKW2lwdjRdCmRucy1zZWFyY2g9Cm1ldGhvZD1hdXRvCgpbaXB2Nl0KYWRkci1nZW4tbW9kZT1zdGFibGUtcHJpdmFjeQpkbnMtc2VhcmNoPQptZXRob2Q9YXV0bw==
+        path: /etc/NetworkManager/system-connections/mobileWAP.connection
+    elemental:
+      install:
+        poweroff: true
+        device: /dev/mmcblk0
+        debug: true
+        disable-boot-entry: true
+      registration:
+        emulate-tpm: true
+  # machineName: "${System Information/UUID}"
+  machineInventoryLabels:
+    location: "de"
+    manufacturer: "${System Information/Manufacturer}"
+    productName: "${System Information/Product Name}"
+    serialNumber: "${System Information/Serial Number}"
+    machineUUID: "${System Information/UUID}"

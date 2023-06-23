@@ -1,11 +1,13 @@
 SHELL := /bin/bash
-REGISTRATION_NAME := vtpm-demo
-# REPO can be one of Dev|Staging|Stable
-REPO := Staging
+REGISTRATION_NAME := rpi-demo
+# REPO can be one of dev|staging|stable
+REPO := stable
 #OPERATOR := "oci://registry.opensuse.org/isv/rancher/elemental/dev/charts/rancher/elemental-operator-chart"
-OPERATOR := "oci://registry.opensuse.org/isv/rancher/elemental/staging/charts/rancher/elemental-operator-chart"
+OPERATOR := "oci://registry.opensuse.org/isv/rancher/elemental/$(REPO)/charts/rancher/elemental-operator-chart"
 
 elemental_operator:
+	helm pull $(OPERATOR)
+	helm show all $(OPERATOR)
 	helm upgrade --create-namespace -n cattle-elemental-system --install --set image.imagePullPolicy=Always elemental-operator $(OPERATOR)
 
 registration:
@@ -13,6 +15,10 @@ registration:
 
 cluster:
 	kubectl apply -f e7l/suse.yaml
+
+pull-registration:
+	curl -k $(shell kubectl get machineregistration -n fleet-default $(REGISTRATION_NAME) -o jsonpath="{.status.registrationURL}") -o build/$(REGISTRATION_NAME)-registration.yaml
+
 
 iso: clean 
 	[[ ! -d build ]] && mkdir build || echo "build/ exists, continuing .."
