@@ -1,7 +1,7 @@
 apiVersion: elemental.cattle.io/v1beta1
 kind: MachineRegistration
 metadata:
-  name: vtpm-demo
+  name: kvm-demo
   namespace: fleet-default
 spec:
   config:
@@ -28,17 +28,16 @@ spec:
     elemental:
       install:
         reboot: true
-        device: /dev/sda
+        device: /dev/vda
         debug: true
         eject-cd: true
       registration:
         emulate-tpm: true
         emulated-tpm-seed: -1
-        no-smbios: true
-  # machineName: "${System Information/UUID}"
+  machineName: "${System Information/UUID}"
   machineInventoryLabels:
     location: "us"
-    # manufacturer: "${System Information/Manufacturer}"
-    # productName: "${System Information/Product Name}"
-    # serialNumber: "${System Information/Serial Number}"
-    # machineUUID: "${System Information/UUID}"
+    manufacturer: "${System Information/Manufacturer}"
+    productName: "${System Information/Product Name}"
+    serialNumber: "${System Information/Serial Number}"
+    machineUUID: "${System Information/UUID}"

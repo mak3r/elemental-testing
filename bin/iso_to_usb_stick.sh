@@ -17,7 +17,7 @@ if [ -z "$1" ] || [ -z "$2" ]; then
 fi
 
 # Check that pv is installed
-[ -n $(command -v pv) ] && echo "pv is installed. copying to usb .." || (echo "Please install pv to continue." && exit)
+[ -n $(command -v pv) ] && echo "pv is installed. copying to usb .." || (echo "Please install pv to continue."; exit 1)
 
 SIZE=$(find $ISO -printf "%s")
 
