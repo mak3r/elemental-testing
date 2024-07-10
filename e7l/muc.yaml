@@ -8,9 +8,9 @@ spec:
     spec:
       selector:
         matchExpressions:
-          - key: location
+          - key: machineUUID
             operator: In
-            values: [ 'de' ]
+            values: [ 'eb693279-0b0c-49c5-b726-99d8488407c8' ]
 ---
 kind: Cluster
 apiVersion: provisioning.cattle.io/v1
@@ -22,6 +22,7 @@ metadata:
     edge-arch: single-node
     corp: suse
     location: de
+    geo: emea
 spec:
   rkeConfig:
     machinePools:

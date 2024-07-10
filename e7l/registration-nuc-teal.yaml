@@ -1,7 +1,7 @@
 apiVersion: elemental.cattle.io/v1beta1
 kind: MachineRegistration
 metadata:
-  name: susecon2023-demo
+  name: nuc-teal-demo
   namespace: fleet-default
 spec:
   config:
@@ -13,7 +13,7 @@ spec:
         - name: root
           passwd: root
       ssh_authorized_keys:
-        - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDHVZtKeG7C1CmMYh07Rgm6JkbIZ90DpjuKip1Aexhm5qz0O/E6w6tB0FTd2rCWO+FtOYpFMT2ao9dqeMvBTkTRGGQZ1nG+QaWYFGExS5lGUm+n9GXJU34LK6fcVx7xgZ3rw7RKWYXPmS/hIujSKRL0Qj9RMuVHIVMzDUzUL9zYOEHyLtY5OkHgzCp8wcVyx7CdBY/G3gru42MQmLoN3yJV1mti7YS9IjY99i55M5FeUe4/NcukHoYkMuyHtHugHlXeficAhpUrsouKRnMaXDFCK4sGmZucF8zpyXpG8qcGE+S6b5e/NderR+HlWTbpURiFJRthwCr2pAR90pvanuUN markabrams@marks-mbp.lan
+        - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC/4vVlIbPrvtlZfnOHja8XVjZuVldojJQIz+/ms8PFifdmKqcFaoKNQnTJJ1uERcUkhruNMi9gk9R+bpjZZHfI0pcfWc+qWTaXMGmvGmuJRnryUMgUTW+uUAdRp5lgnybyh6XYXz3DIVElwzelRbuuhSTstyCHZDaO5NjirkeMUiL58S4DQZguyRuSIeT6L8j+uMuvrZSc2c4b/bMJ+nmhpHQNdTd5aZFpyXRIjSGBMGTXNTeKgVkbKqkf2hLNmo7gjAHd6zwM/1xJWFSqA5Jo5LDhl/gyy369oTZ7dhA/CzaStwE+BRu+yz/w/Qrm1mbXYDOb2zYSVRVWrgVPTBblPc0yybGM0OO+qQw8NQU+nWUFOs059kckWC/P3kGvW/wtfNQ3S+IvV3+HzTaVWW8tk7Hj3h4D7KFZDgRNYGYK3DnYjBJHnR/CC+eL2niC2NS66uB75aBnfLiAXvEV4cx6KqJ9DcVTVGOYKWgkX/MheMxwhM//pzQgzhBMzzxTsc0= suse-mak3r@zephyrus
       write_files:
       - encoding: b64
         content: W2Nvbm5lY3Rpb25dCmlkPWdsaW5ldAp0eXBlPXdpZmkKaW50ZXJmYWNlLW5hbWU9d2xhbjAKcGVybWlzc2lvbnM9CnRpbWVzdGFtcD0xNjcxNTQ5NjQxCgpbd2lmaV0KbWFjLWFkZHJlc3MtYmxhY2tsaXN0PQptb2RlPWluZnJhc3RydWN0dXJlCnNzaWQ9U1VTRUNPTgoKW3dpZmktc2VjdXJpdHldCmtleS1tZ210PXdwYS1wc2sKcHNrPUlubm92YXRlCgpbaXB2NF0KZG5zLXNlYXJjaD0KbWV0aG9kPWF1dG8KCltpcHY2XQphZGRyLWdlbi1tb2RlPXN0YWJsZS1wcml2YWN5CmRucy1zZWFyY2g9Cm1ldGhvZD1hdXRv

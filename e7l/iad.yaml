@@ -8,9 +8,9 @@ spec:
     spec:
       selector:
         matchExpressions:
-          - key: location
+          - key: serialNumber
             operator: In
-            values: [ 'us' ]
+            values: [ 'G6BE85000AA2' ]
 ---
 kind: Cluster
 apiVersion: provisioning.cattle.io/v1

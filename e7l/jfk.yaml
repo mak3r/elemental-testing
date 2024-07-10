@@ -8,9 +8,9 @@ spec:
     spec:
       selector:
         matchExpressions:
-          - key: location
+          - key: site
             operator: In
-            values: [ 'us' ]
+            values: [ 'jfk' ]
 ---
 kind: Cluster
 apiVersion: provisioning.cattle.io/v1
@@ -36,4 +36,4 @@ spec:
         quantity: 1
         unhealthyNodeTimeout: 0s
         workerRole: true
-  kubernetesVersion: v1.25.12+k3s1
+  kubernetesVersion: v1.27.12+k3s1
